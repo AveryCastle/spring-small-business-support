@@ -1,24 +1,18 @@
 package com.example.springlocalgovernmentsupport.enums;
 
+import java.util.Arrays;
+
 public enum UsageCode {
 
-    OPERATION("001", "운전"), OPERATION_FACILITIES("002", "운전 및 시설");
-
-    private String code;
+    OPERATION("운전"),
+    FACILITIES("시설"),
+    OPERATION_FACILITIES("운전 및 시설"),
+    EMPTY("미존재");
 
     private String value;
 
-    UsageCode(String code, String value) {
-        this.code = code;
+    UsageCode(String value) {
         this.value = value;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getValue() {
@@ -27,5 +21,12 @@ public enum UsageCode {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public static UsageCode findByValue(String value) {
+        return Arrays.stream(UsageCode.values())
+                .filter(usageCode -> usageCode.getValue().equals(value))
+                .findAny()
+                .orElse(EMPTY);
     }
 }

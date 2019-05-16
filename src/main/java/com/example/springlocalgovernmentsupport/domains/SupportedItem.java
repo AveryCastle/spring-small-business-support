@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,7 +28,7 @@ public class SupportedItem extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(mappedBy = "supportedItem")
+    @OneToOne(mappedBy = "supportedItem", cascade = CascadeType.ALL)
     private LocalGovernment localGovernment;
 
     @Column(name = "target", nullable = false)
@@ -58,7 +59,7 @@ public class SupportedItem extends BaseEntity {
     @Builder
     public SupportedItem(LocalGovernment localGovernment, String target, UsageCode usage, long limitAmount,
                          float fromRate, float endRate, String institute, String mgmt, String reception) {
-        this.localGovernment = localGovernment;
+        this.setLocalGovernment(localGovernment);
         this.target = target;
         this.usage = usage;
         this.limitAmount = limitAmount;
@@ -74,5 +75,19 @@ public class SupportedItem extends BaseEntity {
         if (endRate == 0.0f) {
             endRate = fromRate;
         }
+    }
+
+    public void setLocalGovernment(LocalGovernment localGovernment) {
+        if (localGovernment == null) {
+            if (this.localGovernment != null) {
+                this.localGovernment.setSupportedItem(null);
+            }
+        } else {
+            if (localGovernment.getSupportedItem() != this) {
+                this.localGovernment = localGovernment;
+                localGovernment.setSupportedItem(this);
+            }
+        }
+        this.localGovernment = localGovernment;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.springlocalgovernmentsupport.domains;
 
+import com.example.springlocalgovernmentsupport.dtos.LocalGovernmentSupportedItemCsvDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -30,7 +32,7 @@ public class LocalGovernment extends BaseEntity {
     @Column(name = "name", length = 100, unique = true, nullable = false)
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supported_item_id", foreignKey = @ForeignKey(name = "fk_supported_item_id"))
     private SupportedItem supportedItem;
 
@@ -40,6 +42,25 @@ public class LocalGovernment extends BaseEntity {
 
     public LocalGovernment(String name, SupportedItem supportedItem) {
         this.name = name;
+        this.setSupportedItem(supportedItem);
+    }
+
+    public void setSupportedItem(SupportedItem supportedItem) {
+        if (supportedItem == null) {
+            if (this.supportedItem != null) {
+                this.supportedItem.setLocalGovernment(null);
+            }
+        } else {
+            if (supportedItem.getLocalGovernment() != this) {
+                this.supportedItem = supportedItem;
+                supportedItem.setLocalGovernment(this);
+            }
+        }
         this.supportedItem = supportedItem;
+    }
+
+    public static LocalGovernment create(LocalGovernmentSupportedItemCsvDto supportedItemDto) {
+        LocalGovernment localGovernment = new LocalGovernment(supportedItemDto.getLocalGovernmentName());
+        return localGovernment;
     }
 }
