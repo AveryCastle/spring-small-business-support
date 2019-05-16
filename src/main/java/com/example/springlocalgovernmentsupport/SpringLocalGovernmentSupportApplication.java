@@ -9,5 +9,4 @@ public class SpringLocalGovernmentSupportApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringLocalGovernmentSupportApplication.class, args);
     }
-
 }
