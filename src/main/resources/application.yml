@@ -1,0 +1,72 @@
+---
+# local environment
+spring:
+  profiles: local
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  datasource:
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: create-drop
+    h2:
+      console:
+        enabled: true
+    open-in-view: false
+
+logging:
+  level:
+    root: debug
+    org:
+      hibernate:
+        SQL: debug # show sql statement
+        type:
+          descriptor:
+            sql: trace # show sql values
+
+
+---
+# development environment
+spring:
+  profiles: development
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    datasource:
+      jpa:
+        show-sql: true
+        hibernate:
+          ddl-auto: validate
+      h2:
+        console:
+          enabled: true
+    open-in-view: false
+
+
+logging:
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  file:
+    max-history: 7
+    max-size: 5MB
+  level:
+    root: info
+    com:
+      example:
+        todolist:
+          services: info
+    org:
+      springframework:
+        web: error
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace # show sql values
