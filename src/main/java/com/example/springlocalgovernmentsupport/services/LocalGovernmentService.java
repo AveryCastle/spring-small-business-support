@@ -35,4 +35,8 @@ public class LocalGovernmentService {
     public List<LocalGovernment> findAll() {
         return localGovernmentRepository.findAll();
     }
+
+    public LocalGovernment findByName(String name) {
+        return localGovernmentRepository.findByName(name);
+    }
 }

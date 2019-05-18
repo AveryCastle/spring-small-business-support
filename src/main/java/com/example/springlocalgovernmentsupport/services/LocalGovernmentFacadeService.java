@@ -47,4 +47,10 @@ public class LocalGovernmentFacadeService {
 
         return localGovernmentService.storeFile(localGovernments);
     }
+
+    public LocalGovernmentSupportItemOutputDto findByName(String name) {
+        LocalGovernment localGovernment = localGovernmentService.findByName(name);
+
+        return dtoConverter.convert(localGovernment);
+    }
 }
