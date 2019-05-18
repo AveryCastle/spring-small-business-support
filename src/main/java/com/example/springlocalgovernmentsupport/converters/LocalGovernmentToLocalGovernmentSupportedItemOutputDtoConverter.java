@@ -36,14 +36,14 @@ public class LocalGovernmentToLocalGovernmentSupportedItemOutputDtoConverter imp
     }
 
     private String convertLimitAmountToString(long limitAmount) {
-        if (limitAmount == -1L) {
+        if (limitAmount == Long.MIN_VALUE) {
             return UNDER_RECOMMENDED_AMOUNT;
         }
         return limitAmount + "억원 이내";
     }
 
     private String convertRateToConditionRate(float fromRate, float endRate) {
-        if (fromRate == -1.00f) {
+        if (fromRate == Float.MAX_VALUE) {
             return SECONDARY_RATE_ALL;
         }
 

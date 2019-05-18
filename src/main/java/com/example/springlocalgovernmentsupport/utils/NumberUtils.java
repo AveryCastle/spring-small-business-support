@@ -14,7 +14,7 @@ public class NumberUtils {
         if (matcher.find()) {
             return Long.valueOf(matcher.group(0));
         }
-        return -1L;
+        return Long.MIN_VALUE;
     }
 
     public static List<Float> convertStringToFromRateAndEndRate(String string) {

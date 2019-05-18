@@ -77,6 +77,14 @@ class LocalGovernmentControllerTest {
                 .andExpect(jsonPath("$.region", is(localGovernmentName)));
     }
 
+    @Test
+    public void whenFindWithEmptyBody_thenThrowsError() throws Exception {
+        // When & Then.
+        mockMvc.perform(post("/v1/local-government").contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
     private String convertObjectToString(LocalGovernmentInputDto localGovernmentInputDto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(localGovernmentInputDto);
     }

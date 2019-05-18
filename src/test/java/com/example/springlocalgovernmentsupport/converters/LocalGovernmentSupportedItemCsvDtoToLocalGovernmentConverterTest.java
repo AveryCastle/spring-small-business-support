@@ -19,8 +19,8 @@ class LocalGovernmentSupportedItemCsvDtoToLocalGovernmentConverterTest {
                         .secondaryPreserve("대출이자 전액")
                         .build();
         LocalGovernment allSupportLocalGovernment = converter.convert(dto);
-        assertEquals(-1.0f, allSupportLocalGovernment.getSupportedItem().getFromRate());
-        assertEquals(-1.0f, allSupportLocalGovernment.getSupportedItem().getEndRate());
+        assertEquals(Float.MAX_VALUE, allSupportLocalGovernment.getSupportedItem().getFromRate());
+        assertEquals(Float.MAX_VALUE, allSupportLocalGovernment.getSupportedItem().getEndRate());
 
         dto.setSecondaryPreserve("3%");
         LocalGovernment sameRateLocalGovernment = converter.convert(dto);

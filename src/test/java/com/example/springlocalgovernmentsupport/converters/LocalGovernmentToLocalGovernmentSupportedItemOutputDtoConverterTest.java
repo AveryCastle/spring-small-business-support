@@ -26,7 +26,7 @@ class LocalGovernmentToLocalGovernmentSupportedItemOutputDtoConverterTest {
         SupportedItem supportedItem = SupportedItem.builder()
                 .target("강릉시 소재 중소기업으로서 강릉시장이 추천한 자")
                 .usage(UsageCode.findByValue("운전"))
-                .limitAmount(-1L)
+                .limitAmount(Long.MIN_VALUE)
                 .build();
         gangneung.setSupportedItem(supportedItem);
 
@@ -43,7 +43,7 @@ class LocalGovernmentToLocalGovernmentSupportedItemOutputDtoConverterTest {
         SupportedItem supportedItem = SupportedItem.builder()
                 .target("강릉시 소재 중소기업으로서 강릉시장이 추천한 자")
                 .usage(UsageCode.findByValue("운전"))
-                .fromRate(-1.00f)
+                .fromRate(Float.MAX_VALUE)
                 .build();
         gangneung.setSupportedItem(supportedItem);
 

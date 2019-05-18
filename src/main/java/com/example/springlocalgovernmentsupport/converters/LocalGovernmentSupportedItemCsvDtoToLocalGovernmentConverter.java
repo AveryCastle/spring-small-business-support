@@ -37,7 +37,7 @@ public class LocalGovernmentSupportedItemCsvDtoToLocalGovernmentConverter implem
     }
 
     private List<Float> setRate(String secondaryPreserve) {
-        Float fromRate = Float.valueOf(-1.00f);
+        Float fromRate = Float.MAX_VALUE;
         Float endRate = fromRate;
 
         List<Float> rates = NumberUtils.convertStringToFromRateAndEndRate(secondaryPreserve);

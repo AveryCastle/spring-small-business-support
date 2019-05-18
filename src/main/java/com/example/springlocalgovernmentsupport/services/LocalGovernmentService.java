@@ -5,11 +5,14 @@ import com.example.springlocalgovernmentsupport.domains.SupportedItem;
 import com.example.springlocalgovernmentsupport.repositories.LocalGovernmentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import javax.transaction.Transactional;
 
 @Service
 public class LocalGovernmentService {
@@ -26,7 +29,7 @@ public class LocalGovernmentService {
             } else {
                 foundOne.setName(localGovernment.getName());
                 SupportedItem foundSupportedItem = foundOne.getSupportedItem();
-                foundSupportedItem.update(foundSupportedItem);
+                foundSupportedItem.update(localGovernment.getSupportedItem());
             }
         });
         return localGovernments.size();
@@ -38,5 +41,9 @@ public class LocalGovernmentService {
 
     public LocalGovernment findByName(String name) {
         return localGovernmentRepository.findByName(name);
+    }
+
+    public Page<LocalGovernment> findAll(Pageable pageable) {
+        return localGovernmentRepository.findAll(pageable);
     }
 }

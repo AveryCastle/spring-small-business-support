@@ -12,7 +12,7 @@ class NumberUtilsTest {
     public void convertStringToNumber() {
         assertEquals(8L, NumberUtils.convertStringToNumber("8억원 이내"));
         assertEquals(300L, NumberUtils.convertStringToNumber("300억원 이내"));
-        assertEquals(-1L, NumberUtils.convertStringToNumber("추천금액 이내"));
+        assertEquals(Long.MIN_VALUE, NumberUtils.convertStringToNumber("추천금액 이내"));
     }
 
     @Test

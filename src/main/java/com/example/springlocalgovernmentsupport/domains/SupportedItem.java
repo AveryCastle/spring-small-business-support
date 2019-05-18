@@ -43,15 +43,15 @@ public class SupportedItem extends BaseEntity {
 
     @Column(name = "limitAmount", nullable = false)
     @Setter
-    private long limitAmount = -1L;
+    private long limitAmount = Long.MAX_VALUE;
 
     @Column(name = "fromRate", precision = 3, scale = 2, nullable = false)
     @Setter
-    private float fromRate = -1.00f;
+    private float fromRate = Float.MAX_VALUE;
 
     @Column(name = "endRate", precision = 3, scale = 2, nullable = false)
     @Setter
-    private float endRate = -1.00f;
+    private float endRate = Float.MAX_VALUE;
 
     @Column(name = "institute", nullable = false)
     @Setter
