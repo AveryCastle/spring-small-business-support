@@ -1,6 +1,7 @@
 package com.example.springlocalgovernmentsupport.controllers;
 
-import com.example.springlocalgovernmentsupport.services.SupportedItemService;
+import com.example.springlocalgovernmentsupport.services.LimitAmountSupportedItemService;
+import com.example.springlocalgovernmentsupport.services.RateSupportedItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,14 +19,25 @@ import java.util.List;
 public class SupportedItemController {
 
     @Autowired
-    private SupportedItemService supportedItemService;
+    private LimitAmountSupportedItemService limitAmountSupportedItemService;
 
-    @GetMapping(value = "/local-government")
+    @Autowired
+    private RateSupportedItemService rateSupportedItemService;
+
+    @GetMapping(value = "/local-governments/names")
     public List<String> findLocalGovernmentWithSize(@RequestParam("size") int size) {
         size = validateSize(size);
 
         Pageable pageable = PageRequest.of(0, size, Sort.Direction.DESC, "limitAmount");
-        return supportedItemService.findAll(pageable);
+        return limitAmountSupportedItemService.findAll(pageable);
+    }
+
+    @GetMapping(value = "/local-governments/institutes")
+    public List<String> findMinRates(@RequestParam("size") int size) {
+        size = validateSize(size);
+
+        Pageable pageable = PageRequest.of(0, size, Sort.Direction.ASC, "fromRate");
+        return rateSupportedItemService.findAll(pageable);
     }
 
     private int validateSize(int size) {

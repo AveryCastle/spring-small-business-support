@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @ExtendWith(MockitoExtension.class)
-class SupportedItemServiceTest {
+class LimitAmountSupportedItemServiceTest {
 
     private static final int SIZE = 3;
 
@@ -36,7 +36,7 @@ class SupportedItemServiceTest {
     private SupportedItemRepository supportedItemRepository;
 
     @InjectMocks
-    private SupportedItemService supportedItemService;
+    private LimitAmountSupportedItemService limitAmountSupportedItemService;
 
     @BeforeEach
     public void setUp() {
@@ -45,7 +45,7 @@ class SupportedItemServiceTest {
 
     @Test
     public void givenLocalGovernmentAndSupportedItem_whenFindWithSize_thenReturnsSortedList() {
-        List<String> actual = supportedItemService.findAll(pageable);
+        List<String> actual = limitAmountSupportedItemService.findAll(pageable);
 
         assertEquals(SIZE, actual.size());
         IntStream.range(0, SIZE).forEach(index -> {
