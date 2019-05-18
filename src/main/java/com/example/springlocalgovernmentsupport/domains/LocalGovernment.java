@@ -3,6 +3,7 @@ package com.example.springlocalgovernmentsupport.domains;
 import com.example.springlocalgovernmentsupport.dtos.LocalGovernmentSupportedItemCsvDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ public class LocalGovernment extends BaseEntity {
     private Long id;
 
     @Column(name = "name", length = 100, unique = true, nullable = false)
+    @Setter
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)

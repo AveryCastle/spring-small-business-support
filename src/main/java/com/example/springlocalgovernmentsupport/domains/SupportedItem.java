@@ -4,6 +4,7 @@ import com.example.springlocalgovernmentsupport.enums.UsageCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,28 +33,36 @@ public class SupportedItem extends BaseEntity {
     private LocalGovernment localGovernment;
 
     @Column(name = "target", nullable = false)
+    @Setter
     private String target;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "usage", nullable = false)
+    @Setter
     private UsageCode usage;
 
     @Column(name = "limitAmount", nullable = false)
-    private long limitAmount = 0L;
+    @Setter
+    private long limitAmount = -1L;
 
     @Column(name = "fromRate", precision = 3, scale = 2, nullable = false)
-    private float fromRate = 0.00f;
+    @Setter
+    private float fromRate = -1.00f;
 
     @Column(name = "endRate", precision = 3, scale = 2, nullable = false)
-    private float endRate = 0.00f;
+    @Setter
+    private float endRate = -1.00f;
 
     @Column(name = "institute", nullable = false)
+    @Setter
     private String institute;
 
     @Column(name = "mgmt", nullable = false)
+    @Setter
     private String mgmt;
 
     @Column(name = "reception", nullable = false)
+    @Setter
     private String reception;
 
     @Builder
@@ -89,5 +98,16 @@ public class SupportedItem extends BaseEntity {
             }
         }
         this.localGovernment = localGovernment;
+    }
+
+    public void update(SupportedItem supportedItem) {
+        this.target = supportedItem.getTarget();
+        this.usage = supportedItem.getUsage();
+        this.limitAmount = supportedItem.getLimitAmount();
+        this.fromRate = supportedItem.getFromRate();
+        this.endRate = supportedItem.getEndRate();
+        this.institute = supportedItem.getInstitute();
+        this.mgmt = supportedItem.getMgmt();
+        this.reception = supportedItem.getReception();
     }
 }

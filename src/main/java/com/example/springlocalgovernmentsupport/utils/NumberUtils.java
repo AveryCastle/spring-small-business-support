@@ -1,6 +1,5 @@
 package com.example.springlocalgovernmentsupport.utils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -15,7 +14,7 @@ public class NumberUtils {
         if (matcher.find()) {
             return Long.valueOf(matcher.group(0));
         }
-        return 0;
+        return -1L;
     }
 
     public static List<Float> convertStringToFromRateAndEndRate(String string) {

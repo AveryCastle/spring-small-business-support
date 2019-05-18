@@ -1,7 +1,7 @@
 package com.example.springlocalgovernmentsupport.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class LocalGovernmentSupportedItemCsvDto {
 
     @JsonProperty("구분")
@@ -38,4 +37,19 @@ public class LocalGovernmentSupportedItemCsvDto {
 
     @JsonProperty("취급점")
     private String reception;
+
+    @Builder
+    public LocalGovernmentSupportedItemCsvDto(Long id, String localGovernmentName, String target, String usage,
+                                              String limitAmount, String secondaryPreserve, String institute,
+                                              String mgmt, String reception) {
+        this.id = id;
+        this.localGovernmentName = localGovernmentName;
+        this.target = target;
+        this.usage = usage;
+        this.limitAmount = limitAmount;
+        this.secondaryPreserve = secondaryPreserve;
+        this.institute = institute;
+        this.mgmt = mgmt;
+        this.reception = reception;
+    }
 }

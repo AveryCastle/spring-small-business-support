@@ -3,7 +3,7 @@ package com.example.springlocalgovernmentsupport.controllers;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.springlocalgovernmentsupport.services.LocalGovernmentService;
+import com.example.springlocalgovernmentsupport.services.LocalGovernmentFacadeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,11 +27,11 @@ class LocalGovernmentControllerTest {
 
     private MockMvc mockMvc;
 
+    @Mock
+    private LocalGovernmentFacadeService localGovernmentFacadeService;
+
     @InjectMocks
     private LocalGovernmentController localGovernmentController;
-
-    @Mock
-    private LocalGovernmentService localGovernmentService;
 
     @BeforeEach
     public void setUp() {
