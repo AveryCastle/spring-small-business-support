@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalGovernmentSupportedItemDto {
+public class LocalGovernmentSupportedItemCsvDto {
 
     @JsonProperty("구분")
     private Long id;

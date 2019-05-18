@@ -2,18 +2,15 @@ package com.example.springlocalgovernmentsupport.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.springlocalgovernmentsupport.commons.BaseTest;
 import com.example.springlocalgovernmentsupport.dtos.LocalGovernmentSupportedItemCsvDto;
 import org.junit.jupiter.api.Test;
 
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-class CsvUtilsTest {
+class CsvUtilsTest extends BaseTest {
 
     @Test
     public void convertInputStreamToObject() throws IOException {
@@ -23,11 +20,5 @@ class CsvUtilsTest {
         List<LocalGovernmentSupportedItemCsvDto> supportedItemDtos = CsvUtils.read(LocalGovernmentSupportedItemCsvDto.class, fileInputStream);
 
         assertEquals(98, supportedItemDtos.size());
-    }
-
-    private InputStream readInputStreamFromFile(String filePath) throws IOException {
-        final File resource = new ClassPathResource(filePath).getFile();
-        final InputStream fileInputStream = new FileInputStream(resource);
-        return fileInputStream;
     }
 }
