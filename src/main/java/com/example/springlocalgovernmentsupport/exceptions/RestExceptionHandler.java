@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +47,30 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         logger.error("handleEntityNotFound", ex);
         ApiError apiError = new ApiError(ErrorCode.NOT_FOUND_ENTITY, HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    protected ResponseEntity<Object> handleInvalidJwtAuthentication(InvalidJwtAuthenticationException ex) {
+        logger.error("InvalidJwtAuthenticationException", ex);
+        ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    protected ResponseEntity<Object> handleUsernameNotFoundAuthentication(UsernameNotFoundException ex) {
+        logger.error("handleUsernameNotFoundAuthentication", ex);
+        ApiError apiError = new ApiError(ErrorCode.NOT_FOUND_ENTITY, HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    protected ResponseEntity<Object> handleBadCredentials(BadCredentialsException ex) {
+        logger.error("handleBadCredentials", ex);
+        ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

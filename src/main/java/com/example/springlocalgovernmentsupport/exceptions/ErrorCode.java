@@ -5,7 +5,7 @@ public enum ErrorCode {
     MALFORMED_JSON_REQUEST("A001", "Malformed JSON reques"),
     INVALID_INPUT_PARAMS("A002", "Invalid Input Parameters"),
     NOT_FOUND_ENTITY("A003", "Not Found Entity"),
-    UNFINISHED_CHILDREN("A004", "Unfinished Children"),
+    NOT_AUTHORIZED("A004", "Not Authorized"),
     INTERNAL_SERVER_ERROR("A999", "Internal Server Error");
 
     private final String code;
