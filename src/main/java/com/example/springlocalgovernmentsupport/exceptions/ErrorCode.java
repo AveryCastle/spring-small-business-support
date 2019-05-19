@@ -6,6 +6,9 @@ public enum ErrorCode {
     INVALID_INPUT_PARAMS("A002", "Invalid Input Parameters"),
     NOT_FOUND_ENTITY("A003", "Not Found Entity"),
     NOT_AUTHORIZED("A004", "Not Authorized"),
+    UNSUPPORTED_MEDIA_TYPE("A005", "지원하지 않는 Media Type"),
+    BAD_REQUEST("A006", "잘못된 요청"),
+    CONFLICT("A007", "Conflict"),
     INTERNAL_SERVER_ERROR("A999", "Internal Server Error");
 
     private final String code;

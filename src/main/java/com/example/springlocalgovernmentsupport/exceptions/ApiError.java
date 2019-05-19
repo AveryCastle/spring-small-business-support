@@ -12,12 +12,14 @@ import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 
 @Data
@@ -62,6 +64,22 @@ public class ApiError {
         this.code = code;
         this.status = status;
         this.message = message;
+        this.defaultMessage = ex.getLocalizedMessage();
+    }
+
+    public ApiError(ErrorCode errorCode, HttpStatus status, String message, Throwable ex) {
+        this();
+        this.code = errorCode.getCode();
+        this.status = status;
+        this.message = message;
+        this.defaultMessage = ex.getLocalizedMessage();
+    }
+
+    public ApiError(ErrorCode errorCode, HttpStatus status, Throwable ex) {
+        this();
+        this.code = errorCode.getCode();
+        this.status = status;
+        this.message = errorCode.getMessage();
         this.defaultMessage = ex.getLocalizedMessage();
     }
 
