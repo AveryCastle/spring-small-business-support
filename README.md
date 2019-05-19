@@ -42,7 +42,7 @@ API
 Operation | HTTP Method | Request URL | Description
 ----------|-----------------|-----------------------------------|--------------------
 [Create](#create-operation) | POST | http://base/auth/signup | signup 계정생성 API(ID, PASSWORD)
-[Create](#read-operation) | POST | http://base/auth/signin | signin 로그인 API
+[Action](#read-operation) | POST | http://base/auth/signin | signin 로그인 API
 [Read](#read-operation) | GET | https://base//v1/local-governments | 지원하는 지자체 목록 검색 API 개발
 [Create](#create-operation) | POST | http://base/v1/upload | 데이터 파일에서 각 레코드를 데이터베이스에 저장하는 API 개발
 [Read](#read-operation) | GET | https://base//v1/local-governments | 지원하는 지자체 목록 검색 API 개발
