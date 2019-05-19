@@ -1,9 +1,12 @@
 package com.example.springlocalgovernmentsupport.domains;
 
 import com.example.springlocalgovernmentsupport.dtos.LocalGovernmentSupportedItemCsvDto;
+import com.example.springlocalgovernmentsupport.generators.StringPrefixedSequenceIdGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,9 +29,15 @@ import javax.persistence.UniqueConstraint;
 public class LocalGovernment extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "local_government_seq")
+    @GenericGenerator(
+            name = "local_government_seq",
+            strategy = "com.example.springlocalgovernmentsupport.generators.StringPrefixedSequenceIdGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "50"),
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "reg"),
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d")})
+    private String id;
 
     @Column(name = "name", length = 100, unique = true, nullable = false)
     @Setter
