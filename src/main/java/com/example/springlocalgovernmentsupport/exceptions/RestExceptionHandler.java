@@ -1,5 +1,6 @@
 package com.example.springlocalgovernmentsupport.exceptions;
 
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -7,24 +8,30 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
+import java.util.Set;
+
+@RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -35,6 +42,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
         String error = ex.getParameterName() + " parameter is missing";
         return buildResponseEntity(new ApiError(ErrorCode.MALFORMED_JSON_REQUEST.getCode(), HttpStatus.BAD_REQUEST, error, ex));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn(ex.getMessage());
+        Set<HttpMethod> supportedMethods = ex.getSupportedHttpMethods();
+        if (!CollectionUtils.isEmpty(supportedMethods)) {
+            headers.setAllow(supportedMethods);
+        }
+
+        ApiError apiError = new ApiError(ErrorCode.METHOD_NOT_ALLOWED, HttpStatus.METHOD_NOT_ALLOWED);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
     }
 
     @Override
@@ -129,6 +150,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InvalidJwtAuthenticationException.class)
     protected ResponseEntity<Object> handleInvalidJwtAuthentication(InvalidJwtAuthenticationException ex) {
         logger.error("InvalidJwtAuthenticationException", ex);
+        ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleAccessDeniedExceptionn(AccessDeniedException ex) {
+        logger.error("AccessDeniedException", ex);
+        ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    protected ResponseEntity<Object> handleJwtException(JwtException ex) {
+        logger.error("JwtException", ex);
         ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
