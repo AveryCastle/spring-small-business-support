@@ -80,6 +80,17 @@ class LocalGovernmentControllerITest extends BaseTest {
     }
 
     @Test
+    public void whenUploadFileWithInvalidToken_thenThrowsError() throws IOException {
+        given()
+                .header("Authorization", "Bearer Invalid Token")
+                .multiPart("file", readFile("data/temp.csv"))
+                .when()
+                .post("/v1/upload")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
     public void whenUploadFileWithAuth_thenSuccess() throws IOException {
         given()
                 .header("Authorization", "Bearer " + token)

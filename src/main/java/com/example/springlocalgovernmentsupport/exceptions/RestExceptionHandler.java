@@ -147,14 +147,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    @ExceptionHandler(InvalidJwtAuthenticationException.class)
-    protected ResponseEntity<Object> handleInvalidJwtAuthentication(InvalidJwtAuthenticationException ex) {
-        logger.error("InvalidJwtAuthenticationException", ex);
-        ApiError apiError = new ApiError(ErrorCode.NOT_AUTHORIZED, HttpStatus.FORBIDDEN);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Object> handleAccessDeniedExceptionn(AccessDeniedException ex) {
         logger.error("AccessDeniedException", ex);
