@@ -2,6 +2,7 @@ package com.example.springlocalgovernmentsupport.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import lombok.AllArgsConstructor;
@@ -12,14 +13,12 @@ import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 
 @Data
@@ -137,14 +136,14 @@ public class ApiError {
         constraintViolations.forEach(this::addValidationError);
     }
 
-
-    abstract class ApiSubError {
+    @JsonDeserialize(as = ApiValidationError.class)
+    public static abstract class ApiSubError {
     }
 
     @Data
     @EqualsAndHashCode(callSuper = false)
     @AllArgsConstructor
-    class ApiValidationError extends ApiSubError {
+    public static class ApiValidationError extends ApiSubError {
         private String object;
         private String field;
         private Object rejectedValue;
